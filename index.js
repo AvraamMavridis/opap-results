@@ -3,16 +3,39 @@ const cheerio = require('cheerio');
 const md5 = require('md5');
 const fs = require('fs');
 
-const date = '2018-08-30';
-const url = `https://agones.gr/?date=${date}`;
-const dir = `${__dirname}/results/${date}.json`;
+const options = {
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric'
+}
 
-function writeToFile(results) {
-  fs.writeFile(dir, JSON.stringify(results), function (err) {
+function scrapAll(){
+  const startDate = new Date('2015-06-01');
+  const today = new Date().toLocaleDateString('gr-GR');
+  const endDate = new Date('2015-12-01').toLocaleDateString('gr-GR');
+
+  while(startDate.toLocaleDateString('gr-GR') !== endDate){
+    const dateToScrap = startDate.toLocaleDateString('gr-GR', options);
+    scrap(dateToScrap);
+    startDate.setDate(startDate.getDate() + 1);
+  }
+}
+
+function writeToFile(results, date) {
+  const fileName = (new Date(date)).toLocaleDateString('en-GB', options).replace(/\//g, '-');
+  const year = (new Date(date)).getFullYear();
+  const directory = `${__dirname}/results/${year}/`
+  const filePath = `${directory}${fileName}.json`;
+
+  if (!fs.existsSync(directory)){
+    fs.mkdirSync(directory);
+}
+
+  fs.writeFile(filePath, JSON.stringify(results), function (err) {
     if (err) {
       return console.log(err);
     }
-    console.log(`Results were saved. File: /results/${date}.json`);
+    console.log(`Results were saved. File: /results/${year}/${fileName}.json`);
   });
 }
 
@@ -26,7 +49,7 @@ function getGoals(final_score) {
   return {home_team_goals, away_team_goals, total_goals}
 }
 
-function parseResults(html) {
+function parseResults(html, date) {
   const $ = cheerio.load(html);
   const rows = $('.livescores').first().find('tr');
   const match_date = date;
@@ -70,11 +93,17 @@ function parseResults(html) {
     })
   })
 
-  writeToFile(results);
+  writeToFile(results, date);
 }
 
-request(url, function (error, response, html) {
-  if (!error && response.statusCode == 200) {
-    parseResults(html);
-  }
-});
+function scrap(date){
+  const url = `https://agones.gr/?date=${date}`;
+
+  request(url, function (error, response, html) {
+    if (!error && response.statusCode == 200) {
+      parseResults(html, date);
+    }
+  });
+}
+
+scrapAll();

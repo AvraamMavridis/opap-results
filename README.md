@@ -1,1 +1,1 @@
-Results scrapped from OPAP
+Soccer results scrapped from OPAP, for Data Nerds and AI training
