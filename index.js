@@ -24,7 +24,7 @@ function scrapAll(){
 function writeToFile(results, date) {
   const fileName = (new Date(date)).toLocaleDateString('en-GB', options).replace(/\//g, '-');
   const year = (new Date(date)).getFullYear();
-  const directory = `${__dirname}/results/${year}/`
+  const directory = `${__dirname}/data/results/${year}/`
   const filePath = `${directory}${fileName}.json`;
 
   if (!fs.existsSync(directory)){
@@ -106,4 +106,5 @@ function scrap(date){
   });
 }
 
-scrapAll();
+scrap('2018-09-01')
+// scrapAll();

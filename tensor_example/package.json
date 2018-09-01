@@ -1,5 +1,5 @@
 {
-  "name": "scrap_results",
+  "name": "tensor_example",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,10 +9,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "chalk": "^2.4.1",
-    "cheerio": "^1.0.0-rc.2",
-    "lodash": "^4.17.10",
-    "md5": "^2.2.1",
-    "request": "^2.88.0"
+    "@tensorflow/tfjs": "^0.12.6",
+    "@tensorflow/tfjs-node": "^0.1.14"
   }
 }
