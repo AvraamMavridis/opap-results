@@ -106,5 +106,5 @@ function scrap(date){
   });
 }
 
-scrap('2018-09-01')
+scrap('2018-09-02')
 // scrapAll();

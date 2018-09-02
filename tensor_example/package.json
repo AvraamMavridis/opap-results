@@ -8,8 +8,10 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "@tensorflow/tfjs": "^0.12.6",
-    "@tensorflow/tfjs-node": "^0.1.14"
+    "@tensorflow/tfjs-node": "^0.1.14",
+    "chalk": "^2.4.1",
+    "lodash": "^4.17.10"
   }
 }
